@@ -4,8 +4,8 @@ import { MoonIcon } from '@heroicons/vue/24/outline'
 </script>
 
 <template>
-    <div>
-        <h3>Where in the world?</h3>
-        <p><MoonIcon /> Dark Mode</p>
+    <div class="grid grid-cols-2 px-5 py-10 shadow-md items-center">
+        <h3 class="font-bold">Where in the world?</h3>
+        <p class="justify-self-end flex flex-row items-center"><MoonIcon class="w-5 pr-1" /> Dark Mode</p>
     </div>
 </template>
