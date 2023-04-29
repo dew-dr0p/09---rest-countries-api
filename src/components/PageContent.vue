@@ -65,7 +65,7 @@ onMounted(async () => {
             <i class="pl-7"><MagnifyingGlassIcon class="w-7 text-light-input" /></i>
             <input type="search" placeholder="Search for a country..." class="p-5 m-0 w-full bg-transparent placeholder:text-light-input" style="background-image: transparent url();">
         </form>
-        <div v-if="loading" class="h-[75vh] flex">
+        <div v-if="loading" class="h-[70vh] flex">
             <p class="m-auto">Loading...</p>
         </div>
         <div class="grid grid-cols-1 gap-20 mt-10 md:grid-cols-2 xl:grid-cols-3">
