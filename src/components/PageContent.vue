@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
 import axios from 'axios'
-import { ReactiveEffect, onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue'
 import data from '../data.json'
 
 const localData =  reactive({
@@ -44,6 +44,9 @@ const fetchData = async () => {
 onMounted(async () => {
     try {
         Data.value = await fetchData()
+        setTimeout(() => {
+            loading.value = false
+        }, 4000);
     }
     catch(e) {
         live.value = false
@@ -53,9 +56,9 @@ onMounted(async () => {
         loading.value = false
     }
     console.log(Data.value[1])
-    console.log(Data.value[0].flags.png)
-    console.log(Data.value[0].name.official)
-    console.log(Data.value[0].capital[0])
+    console.log(Data.value[0]['flags']['png'])
+    console.log(Data.value[0]['name']['official'])
+    console.log(Data.value[0]['capital'][0])
 })
 
 // const liveFetch = async () => {
@@ -82,13 +85,13 @@ onMounted(async () => {
             <p class="m-auto">Loading...</p>
         </div>
         <div class="grid grid-cols-1 gap-20 mt-10 md:grid-cols-2 xl:grid-cols-3">
-            <div v-for="local in Data.value" :key="local.flag" class="bg-light-elements flex flex-col w-80 m-auto shadow-md rounded-lg border-none max-w-xs">
-                <img :src="local.flags.png" :alt="local.flags.alt" class="rounded-t-lg">
+            <div v-for="local in Data.value" :key="local['flag']" class="bg-light-elements flex flex-col w-80 m-auto shadow-md rounded-lg border-none max-w-xs">
+                <img :src="local['flags']['png']" :alt="local['flags']['alt']" class="rounded-t-lg">
                 <div class="p-10 pl-7 font-bold">
-                    <h3 class="text-2xl mb-4">{{ local.name.official }}</h3>
-                    <h5 class="mb-1">Population: <span class="font-normal">{{ local.population.toLocaleString() }}</span></h5>
-                    <h5 class="mb-1">Region: <span class="font-normal">{{ local.region }}</span></h5>
-                    <h5 class="mb-2">Capital: <span class="font-normal">{{ local.capital }}</span></h5>
+                    <h3 class="text-2xl mb-4">{{ local['name']['official'] }}</h3>
+                    <h5 class="mb-1">Population: <span class="font-normal">{{ (local['population'] as any).toLocaleString() }}</span></h5>
+                    <h5 class="mb-1">Region: <span class="font-normal">{{ local['region'] }}</span></h5>
+                    <h5 class="mb-2">Capital: <span class="font-normal">{{ local['capital'] }}</span></h5>
                 </div>
             </div>
         </div>
