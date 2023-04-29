@@ -32,11 +32,12 @@ const fetchData = async () => {
 }
 
 // const fetchData = () => {
-//     const response = ref({})
+//     const response = ref([])
 //     axios
 //     .get('https://restcountries.com/v3.1/all')
 //     .then((res) => {
 //         response.value =  res.data
+//         console.log(response.value)
 //     })
 //     return response.value
 // }
@@ -55,24 +56,7 @@ onMounted(async () => {
     finally {
         loading.value = false
     }
-    console.log(Data.value[1])
-    console.log(Data.value[0]['flags']['png'])
-    console.log(Data.value[0]['name']['official'])
-    console.log(Data.value[0]['capital'][0])
 })
-
-// const liveFetch = async () => {
-//     const liveData = reactive({
-//         value: await fetchData()
-//     })
-//     console.log(liveData.value)
-//     return liveData.value
-// }
-
-// Data.value = liveFetch()
-
-// console.log(Data.value)
-
 </script>
 
 <template>
