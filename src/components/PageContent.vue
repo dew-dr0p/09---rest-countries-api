@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
 import axios from 'axios'
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import data from '../data.json'
 
 const localData =  reactive({
@@ -11,6 +11,10 @@ const localData =  reactive({
 const Data = reactive({
     value: []
 })
+
+const searchTerm = ref('')
+
+const region = ref('')
 
 const live = ref(true)
 
@@ -42,6 +46,62 @@ const fetchData = async () => {
 //     return response.value
 // }
 
+const searchData = async () => {
+    const response = ref([])
+    try {
+        await axios
+        .get(`https://restcountries.com/v3.1/name/${searchTerm.value}`)
+        .then((res) => {
+            response.value = res.data
+            console.log(response.value)
+        })
+        return response.value
+    }
+    finally {
+        ''
+    }
+}
+
+const filterRegion = async () => {
+    const response = ref([])
+    try {
+        await axios
+        .get(`https://restcountries.com/v3.1/region/${region.value}`)
+        .then((res) => {
+            response.value = res.data
+            console.log(response.value)
+        })
+        return response.value
+    }
+    finally {
+        ''
+    }
+}
+
+watch(searchTerm, async () => {
+    try{
+        Data.value = await searchData()
+        setTimeout(() => {
+            loading.value = false
+        }, 4000);
+    }
+    catch(e) {
+        console.log(e)
+    }
+})
+
+watch(region, async () => {
+    try {
+        Data.value = await filterRegion()
+        setTimeout(() => {
+            loading.value = false
+        }, 4000);
+    }
+    catch(e) {
+        console.log(e)
+    }
+})
+
 onMounted(async () => {
     try {
         Data.value = await fetchData()
@@ -61,10 +121,20 @@ onMounted(async () => {
 
 <template>
     <div class="w-full h-full bg-light-background p-10">
-        <form action="" class="m-5 bg-light-elements flex items-center shadow-md rounded-lg border-none p-0 max-w-lg">.
-            <i class="pl-7"><MagnifyingGlassIcon class="w-7 text-light-input" /></i>
-            <input type="search" placeholder="Search for a country..." class="p-5 m-0 w-full bg-transparent placeholder:text-light-input" style="background-image: transparent url();">
-        </form>
+        <div class="flex w-full justify-between">
+            <form action="" class="m-5 bg-light-elements flex items-center shadow-md rounded-lg border-none p-0 max-w-lg">.
+                <i class="pl-7"><MagnifyingGlassIcon class="w-7 text-light-input" /></i>
+                <input type="search" placeholder="Search for a country..." v-model="searchTerm" class="p-5 m-0 w-full bg-transparent placeholder:text-light-input" style="background-image: transparent url();">
+            </form>
+            <select name="Filter" v-model="region" class="shadow-md rounded-lg border-none px-5 m-5">
+                <option value="" disabled selected>Filter by Region</option>
+                <option value="Africa">Africa</option>
+                <option value="America">America</option>
+                <option value="Asia">Asia</option>
+                <option value="Europe">Europe</option>
+                <option value="Oceania">Oceania</option>
+            </select>
+        </div>
         <div v-if="loading" class="h-[70vh] flex">
             <p class="m-auto">Loading...</p>
         </div>
