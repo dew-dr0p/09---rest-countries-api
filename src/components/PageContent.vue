@@ -60,7 +60,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="w-full h-full bg-light-background p-14">
+    <div class="w-full h-full bg-light-background p-14 pt-5">
         <div class="flex flex-col md:flex-row w-full justify-between">
             <form action="" class="my-5 bg-light-elements flex items-center shadow-md rounded-lg border-none p-0 max-w-lg">.
                 <i class="pl-7"><MagnifyingGlassIcon class="w-7 text-light-input" /></i>

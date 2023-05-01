@@ -11,6 +11,8 @@ let data = Data.value
 
 let local = localData.value
 
+local
+
 const currencies = ref([])
 
 const languages = ref([])
@@ -49,11 +51,11 @@ onMounted(() => mount())
 </script>
 
 <template>
-    <div class="w-full h-full bg-light-background p-10 md:p-14">
+    <div class="w-full h-full bg-light-background p-10 pt-5 md:p-14">
         <button class="my-5 bg-light-elements flex flex-row items-center shadow-md rounded-lg border-none text-lg p-5 px-10" @click="emit('change', 'PageContent')">
             <ArrowLongLeftIcon class="w-12 pr-5" />Back
         </button>
-        <div class="grid lg:grid-cols-2 gap-20 mt-20">
+        <div class="grid lg:grid-cols-2 gap-20 mt-14">
             <img :src="data[0]['flags']['png']" :alt="data[0]['flags']['alt']" class="w-full">
             <div class="font-bold">
                 <h1 class="text-4xl my-10">{{ data[0]['name']['common'] }}</h1>
