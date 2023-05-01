@@ -48,7 +48,6 @@ onMounted(async () => {
         setTimeout(() => {
             loading.value = false
         }, 4000);
-        console.log(Data.value)
     }
     catch(e) {
         live.value = false
@@ -67,7 +66,7 @@ onMounted(async () => {
                 <i class="pl-7"><MagnifyingGlassIcon class="w-7 text-light-input" /></i>
                 <input type="search" placeholder="Search for a country..." v-model="searchTerm" class="p-5 m-0 w-full bg-transparent placeholder:text-light-input" style="background-image: transparent url();">
             </form>
-            <select name="Filter" v-model="region" class="shadow-md rounded-lg border-none py-5 px-5 my-5 outline-none">
+            <select name="Filter" v-model="region" class="shadow-md rounded-lg border-none py-5 px-5 my-5 outline-none cursor-pointer">
                 <option value="" disabled selected>Filter by Region</option>
                 <option value="Africa">Africa</option>
                 <option value="America">America</option>
@@ -80,7 +79,7 @@ onMounted(async () => {
             <p class="m-auto">Loading...</p>
         </div>
         <div class="grid grid-cols-1 gap-20 mt-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div v-for="local in Data.value" :key="local['flag']" class="bg-light-elements flex flex-col m-auto shadow-md rounded-lg border-none max-w-xs" @click="() => { emit('change', 'PageDetails'), fullName = local['name']['common'] }">
+            <div v-for="local in Data.value" :key="local['flag']" class="bg-light-elements flex flex-col m-auto shadow-md rounded-lg border-none max-w-xs cursor-pointer" @click="() => { emit('change', 'PageDetails'), fullName = local['name']['common'] }">
                 <img :src="local['flags']['png']" :alt="local['flags']['alt']" class="rounded-t-lg">
                 <div class="p-10 pl-7 font-bold">
                     <h3 class="text-2xl mb-4">{{ local['name']['common'] }}</h3>
@@ -91,7 +90,7 @@ onMounted(async () => {
             </div>
         </div>
         <div v-if="!live" class="grid grid-cols-1 gap-20 mt-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div v-for="local in localData.value" :key="local.alpha2Code" class="bg-light-elements flex flex-col w-80 m-auto shadow-md rounded-lg border-none max-w-xs" @click="() => { emit('change', 'PageDetails'), fullName = local.name}">
+            <div v-for="local in localData.value" :key="local.alpha2Code" class="bg-light-elements flex flex-col w-80 m-auto shadow-md rounded-lg border-none max-w-xs cursor-pointer" @click="() => { emit('change', 'PageDetails'), fullName = local.name}">
                 <img :src="local.flags.png" alt="" class="rounded-t-lg">
                 <div class="p-10 pl-7 font-bold">
                     <h3 class="text-2xl mb-4">{{ local.name }}</h3>

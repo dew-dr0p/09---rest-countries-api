@@ -54,7 +54,6 @@ const fetchDetails = async () => {
         .get(`https://restcountries.com/v3.1/name/${fullName.value}?fullText=true`)
         .then((res) => {
             response.value = res.data
-            console.log(response.value)
         })
         return response.value
     }
@@ -70,7 +69,6 @@ const searchData = async () => {
         .get(`https://restcountries.com/v3.1/name/${searchTerm.value}`)
         .then((res) => {
             response.value = res.data
-            console.log(response.value)
         })
         return response.value
     }
@@ -86,7 +84,6 @@ const filterRegion = async () => {
         .get(`https://restcountries.com/v3.1/region/${region.value}`)
         .then((res) => {
             response.value = res.data
-            console.log(response.value)
         })
         return response.value
     }
@@ -102,7 +99,6 @@ const fetchBorders = async () => {
         .get(`https://restcountries.com/v3.1/alpha/${code.value}`)
         .then((res) => {
             response.value = res.data
-            console.log(response.value)
         })
         return response.value
     }

@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { ArrowLongLeftIcon } from '@heroicons/vue/24/solid'
-import { Data, fetchDetails, code, fetchBorders } from '@/store/store'
+import { Data, fetchDetails, code, fetchBorders, fullName, localData } from '@/store/store'
 import { onMounted, ref } from 'vue';
 
 const emit = defineEmits<{
     (event: 'change', value: string): void
 }>()
+
+let data = Data.value
+
+let local = localData.value
 
 const currencies = ref([])
 
@@ -15,29 +19,33 @@ const nativeName = ref([])
 
 const borderCountries = ref([])
 
-onMounted(async () => {
-    Data.value = await fetchDetails()
-    console.log(Data.value)
-    Object.keys(Data.value[0]['currencies']).forEach((e) => {
-        currencies.value.push(Data.value[0]['currencies'][e]['name'])
-        console.log(currencies.value)
+const mount = async () => {
+    currencies.value = []
+    
+    languages.value = []
+    
+    nativeName.value = []
+    
+    borderCountries.value = []
+    
+    data = await fetchDetails()
+    Object.keys(data[0]['currencies']).forEach((e) => {
+        currencies.value.push(data[0]['currencies'][e]['name'])
     })
-    Object.keys(Data.value[0]['languages']).forEach((e) => {
-        languages.value.push(Data.value[0]['languages'][e])
-        console.log(languages.value)
+    Object.keys(data[0]['languages']).forEach((e) => {
+        languages.value.push(data[0]['languages'][e])
     })
-    Object.keys(Data.value[0]['name']['nativeName']).forEach((e) => {
-        nativeName.value.push(Data.value[0]['name']['nativeName'][e]['common'])
-        console.log(nativeName.value)
+    Object.keys(data[0]['name']['nativeName']).forEach((e) => {
+        nativeName.value.push(data[0]['name']['nativeName'][e]['common'])
     })
-    Object.keys(Data.value[0]['borders']).forEach(async (e) => {
-        code.value = Data.value[0]['borders'][e]
-        console.log(code.value)
+    Object.keys(data[0]['borders']).forEach(async (e) => {
+        code.value = data[0]['borders'][e]
         const borders = await fetchBorders()
         borderCountries.value.push(borders[0]['name']['common'])
-        console.log(borderCountries.value)
     })
-})
+}
+
+onMounted(() => mount())
 </script>
 
 <template>
@@ -46,28 +54,51 @@ onMounted(async () => {
             <ArrowLongLeftIcon class="w-12 pr-5" />Back
         </button>
         <div class="grid lg:grid-cols-2 gap-20 mt-20">
-            <img :src="Data.value[0]['flags']['png']" :alt="Data.value[0]['flags']['alt']" class="w-full">
+            <img :src="data[0]['flags']['png']" :alt="data[0]['flags']['alt']" class="w-full">
             <div class="font-bold">
-                <h1 class="text-4xl my-10">{{ Data.value[0]['name']['common'] }}</h1>
+                <h1 class="text-4xl my-10">{{ data[0]['name']['common'] }}</h1>
                 <div class="grid xl:grid-cols-2 gap-5 text-lg">
                     <div>
-                        <p class="mb-3">Native Name: <span>{{ nativeName.toString() }}</span></p>
-                        <p>Population: <span>{{ (Data.value[0]['population'] as any).toLocaleString() }}</span></p>
-                        <p>Region: <span>{{ Data.value[0]['region'] }}</span></p>
-                        <p>Sub Region: <span>{{ Data.value[0]['subregion'] }}</span></p>
-                        <p>Capital: <span>{{ Data.value[0]['capital'][0] }}</span></p>
+                        <p class="mb-3">Native Name: <span>{{ nativeName.join(', ') }}</span></p>
+                        <p>Population: <span>{{ (data[0]['population'] as any).toLocaleString() }}</span></p>
+                        <p>Region: <span>{{ data[0]['region'] }}</span></p>
+                        <p>Sub Region: <span>{{ data[0]['subregion'] }}</span></p>
+                        <p>Capital: <span>{{ data[0]['capital'][0] }}</span></p>
                     </div>
                     <div>
-                        <p>Top Level Domain: <span>{{ Data.value[0]['tld'][0] }}</span></p>
-                        <p>Currencies: <span> {{ currencies.toString() }} </span></p>
-                        <p>Languages: <span>{{ languages.toString() }}</span></p>
+                        <p>Top Level Domain: <span>{{ data[0]['tld'][0] }}</span></p>
+                        <p>Currencies: <span> {{ currencies.join(', ') }} </span></p>
+                        <p>Languages: <span>{{ languages.join(', ') }}</span></p>
                     </div>
                 </div>
                 <div class="mt-10 text-lg">
-                    <p class="flex flex-wrap items-center">Border Countries: <span v-for="border in borderCountries" :key="border" class="p-2 px-7 m-5 mx-2 shadow rounded-lg bg-light-elements">{{ border }}</span></p>
+                    <p class="flex flex-wrap items-center">Border Countries: <span v-for="border in borderCountries" :key="border" class="p-2 px-7 m-5 mx-2 shadow rounded-lg bg-light-elements cursor-pointer" @click="(() => {fullName = border, mount()})">{{ border }}</span></p>
                 </div>
             </div>
         </div>
+        <!-- <div v-if="false" class="grid lg:grid-cols-2 gap-20 mt-20">
+            <img :src="fullName" alt="" class="w-full">
+            <div class="font-bold">
+                <h1 class="text-4xl my-10">{{ (local as any)['fullName']['name']['common'] }}</h1>
+                <div class="grid xl:grid-cols-2 gap-5 text-lg">
+                    <div>
+                        <p class="mb-3">Native Name: <span>{{ nativeName.join(', ') }}</span></p>
+                        <p>Population: <span>{{ (data[0]['population'] as any).toLocaleString() }}</span></p>
+                        <p>Region: <span>{{ data[0]['region'] }}</span></p>
+                        <p>Sub Region: <span>{{ data[0]['subregion'] }}</span></p>
+                        <p>Capital: <span>{{ data[0]['capital'][0] }}</span></p>
+                    </div>
+                    <div>
+                        <p>Top Level Domain: <span>{{ data[0]['tld'][0] }}</span></p>
+                        <p>Currencies: <span> {{ currencies.join(', ') }} </span></p>
+                        <p>Languages: <span>{{ languages.join(', ') }}</span></p>
+                    </div>
+                </div>
+                <div class="mt-10 text-lg">
+                    <p class="flex flex-wrap items-center">Border Countries: <span v-for="border in borderCountries" :key="border" class="p-2 px-7 m-5 mx-2 shadow rounded-lg bg-light-elements cursor-pointer" @click="(() => {fullName = border, mount()})">{{ border }}</span></p>
+                </div>
+            </div>
+        </div> -->
     </div>
 </template>
 
