@@ -1,6 +1,58 @@
 import axios from "axios"
+import { MoonIcon } from '@heroicons/vue/24/solid'
 import { reactive, ref, } from 'vue'
 import data from '../data.json'
+
+const DarkIcon = MoonIcon
+
+localStorage.theme = ''
+
+const checkColorMode = () => {
+    console.log(localStorage.theme)
+}
+
+// const changeTheme = () => {
+//     checkColorMode()
+//     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+//         document.documentElement.classList.add('dark')
+//         document.documentElement.setAttribute('style', 'background: #202C37;')
+//         console.log(localStorage.theme)
+//         console.log(document.documentElement)
+//     } else {
+//         document.documentElement.classList.remove('dark')
+//         console.log(localStorage.theme)
+//     }
+// }
+
+const changeTheme = () => {
+    checkColorMode()
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        localStorage.theme = 'light'
+        document.documentElement.classList.remove('dark')
+        console.log(localStorage.theme)
+    } else {
+        localStorage.theme = 'dark'
+        document.documentElement.classList.add('dark')
+        document.documentElement.setAttribute('style', 'background: #202C37;')
+        console.log(localStorage.theme)
+        console.log(document.documentElement)
+    }
+}
+
+// const toggleLightMode = () => {
+//     localStorage.theme = 'light'
+//     changeTheme()
+//     console.log(localStorage.theme)
+// }
+
+// const toggleDarkMode = () => {
+//     localStorage.theme = 'dark'
+//     changeTheme()
+//     console.log(localStorage.theme)
+// }
+
+checkColorMode()
+
 
 const localData =  reactive({
     value: data
@@ -116,9 +168,13 @@ export {
     localData,
     Data,
     code,
+    DarkIcon,
     fetchBorders,
     fetchData,
     fetchDetails,
     searchData,
-    filterRegion
+    filterRegion,
+    // toggleLightMode,
+    // toggleDarkMode
+    changeTheme
 }
