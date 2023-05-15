@@ -62,7 +62,7 @@ onMounted(async () => {
 <template>
     <div class="w-full h-full bg-light-background dark:bg-dark-background dark:text-dark-text p-14 pt-5">
         <div class="flex flex-col md:flex-row w-full justify-between">
-            <form action="" class="my-5 bg-light-elements dark:bg-dark-elements flex items-center shadow-md rounded-lg border-none p-0 max-w-lg">.
+            <form action="" class="my-5 bg-light-elements dark:bg-dark-elements flex items-center shadow-md rounded-lg border-none p-0 max-w-lg">
                 <i class="pl-7"><MagnifyingGlassIcon class="w-7 text-light-input dark:text-dark-text" /></i>
                 <input type="search" placeholder="Search for a country..." v-model="searchTerm" class="p-5 m-0 w-full bg-transparent placeholder:text-light-input dark:placeholder:text-dark-text" style="background-image: transparent url();">
             </form>
@@ -79,13 +79,13 @@ onMounted(async () => {
             <p class="m-auto">Loading...</p>
         </div>
         <div class="grid grid-cols-1 gap-20 mt-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div v-for="local in Data.value" :key="local['flag']" class="bg-light-elements dark:bg-dark-elements flex flex-col m-auto shadow-md rounded-lg border-none max-w-xs cursor-pointer" @click="() => { emit('change', 'PageDetails'), fullName = local['name']['common'] }">
-                <img :src="local['flags']['png']" :alt="local['flags']['alt']" class="rounded-t-lg">
+            <div v-for="live in Data.value" :key="live['flag']" class="bg-light-elements dark:bg-dark-elements flex flex-col m-auto shadow-md rounded-lg border-none max-w-xs cursor-pointer" @click="() => { emit('change', 'PageDetails'), fullName = live['name']['common'] }">
+                <img :src="live['flags']['png']" :alt="live['flags']['alt']" class="rounded-t-lg">
                 <div class="p-10 pl-7 font-bold">
-                    <h3 class="text-2xl mb-4">{{ local['name']['common'] }}</h3>
-                    <h5 class="mb-1">Population: <span class="font-normal">{{ (local['population'] as any).toLocaleString() }}</span></h5>
-                    <h5 class="mb-1">Region: <span class="font-normal">{{ local['region'] }}</span></h5>
-                    <h5 class="mb-2">Capital: <span v-for="capital in local['capital']" :key="capital" class="font-normal">{{ capital }}</span></h5>
+                    <h3 class="text-2xl mb-4">{{ live['name']['common'] }}</h3>
+                    <h5 class="mb-1">Population: <span class="font-normal">{{ (live['population'] as any).toLocaleString() }}</span></h5>
+                    <h5 class="mb-1">Region: <span class="font-normal">{{ live['region'] }}</span></h5>
+                    <h5 class="mb-2">Capital: <span v-for="capital in live['capital']" :key="capital" class="font-normal">{{ capital }}</span></h5>
                 </div>
             </div>
         </div>

@@ -5,6 +5,8 @@ import data from '../data.json'
 
 const DarkIcon = MoonIcon
 
+const component = ref('LightIcon')
+
 localStorage.theme = ''
 
 const checkColorMode = () => {
@@ -29,13 +31,13 @@ const changeTheme = () => {
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         localStorage.theme = 'light'
         document.documentElement.classList.remove('dark')
-        console.log(localStorage.theme)
+        document.documentElement.removeAttribute('style')
+        component.value = 'LightIcon'
     } else {
         localStorage.theme = 'dark'
         document.documentElement.classList.add('dark')
         document.documentElement.setAttribute('style', 'background: #202C37;')
-        console.log(localStorage.theme)
-        console.log(document.documentElement)
+        component.value = 'DarkIcon'
     }
 }
 
@@ -169,6 +171,7 @@ export {
     Data,
     code,
     DarkIcon,
+    component,
     fetchBorders,
     fetchData,
     fetchDetails,
