@@ -90,7 +90,7 @@ onMounted(async () => {
             </div>
         </div>
         <div v-if="!live" class="grid grid-cols-1 gap-20 mt-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div v-for="local in localData.value" :key="local.alpha2Code" class="bg-light-elements dark:bg-dark-elements flex flex-col w-80 m-auto shadow-md rounded-lg border-none max-w-xs cursor-pointer" @click="() => { emit('change', 'PageDetails'), fullName = local.name}">
+            <div v-for="local in localData.value" :key="local.alpha2Code" class="bg-light-elements dark:bg-dark-elements flex flex-col m-auto shadow-md rounded-lg border-none max-w-xs cursor-pointer" @click="() => { emit('change', 'PageDetails'), fullName = local.name}">
                 <img :src="local.flags.png" alt="" class="rounded-t-lg">
                 <div class="p-10 pl-7 font-bold">
                     <h3 class="text-2xl mb-4">{{ local.name }}</h3>

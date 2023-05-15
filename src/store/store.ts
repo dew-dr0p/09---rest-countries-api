@@ -9,10 +9,6 @@ const component = ref('LightIcon')
 
 localStorage.theme = ''
 
-const checkColorMode = () => {
-    console.log(localStorage.theme)
-}
-
 // const changeTheme = () => {
 //     checkColorMode()
 //     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -27,7 +23,6 @@ const checkColorMode = () => {
 // }
 
 const changeTheme = () => {
-    checkColorMode()
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         localStorage.theme = 'light'
         document.documentElement.classList.remove('dark')
@@ -40,21 +35,6 @@ const changeTheme = () => {
         component.value = 'DarkIcon'
     }
 }
-
-// const toggleLightMode = () => {
-//     localStorage.theme = 'light'
-//     changeTheme()
-//     console.log(localStorage.theme)
-// }
-
-// const toggleDarkMode = () => {
-//     localStorage.theme = 'dark'
-//     changeTheme()
-//     console.log(localStorage.theme)
-// }
-
-checkColorMode()
-
 
 const localData =  reactive({
     value: data
@@ -177,7 +157,5 @@ export {
     fetchDetails,
     searchData,
     filterRegion,
-    // toggleLightMode,
-    // toggleDarkMode
     changeTheme
 }

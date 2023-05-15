@@ -49,14 +49,14 @@ const mount = async () => {
     await (localDetails.value as any)['languages'].forEach((e: Object) => {
         (languages.value as any).push((e as any)['name'])
     })
-    await (localDetails.value as any)['borders'].forEach(async (e: string) => {
-        code.value = e
-        // await local.forEach((e) => {
-        //     e.alpha3Code === code.value ? borders.value = e : ''
-        // })
-        await fetchLocalBorders()
-        (borderCountries.value as any).push((borders.value as any)['name'])
-    })
+    // await (localDetails.value as any)['borders'].forEach(async (e: string) => {
+    //     code.value = e
+    //     // await local.forEach((e) => {
+    //     //     e.alpha3Code === code.value ? borders.value = e : ''
+    //     // })
+    //     await fetchLocalBorders()
+    //     (borderCountries.value as any).push((borders.value as any)['name'])
+    // })
 
     console.log(localDetails.value)
 
@@ -85,11 +85,7 @@ onMounted(() => mount())
         <button class="my-5 bg-light-elements dark:bg-dark-elements flex flex-row items-center shadow-md rounded-lg border-none text-lg p-5 px-10" @click="emit('change', 'PageContent')">
             <ArrowLongLeftIcon class="w-12 pr-5" />Back
         </button>
-        {{ (localDetails.value as any).name }}
-        {{ currencies }}
-        {{ languages }}
-        {{ borderCountries }}
-        <!-- <div v-if="!live" class="grid lg:grid-cols-2 gap-20 mt-14">
+        <div v-if="!live" class="grid lg:grid-cols-2 gap-20 mt-14">
             <img :src="(localDetails.value as any)['flags']['png']" alt="" class="w-full">
             <div class="font-bold">
                 <h1 class="text-4xl my-10">{{ (localDetails.value as any)['name'] }}</h1>
@@ -134,7 +130,7 @@ onMounted(() => mount())
                     <p class="flex flex-wrap items-center">Border Countries: <span v-for="border in borderCountries" :key="border" class="p-2 px-7 m-5 mx-2 shadow rounded-lg bg-light-elements dark:bg-dark-elements cursor-pointer" @click="(() => {fullName = border, mount()})">{{ border }}</span></p>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 </template>
 
